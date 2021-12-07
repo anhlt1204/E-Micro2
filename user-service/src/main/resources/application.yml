@@ -1,0 +1,33 @@
+server:
+  port: 10004
+
+spring:
+  application:
+    name: user-svc
+  datasource:
+    url: jdbc:mysql://localhost/user-service?createDatabaseIfNotExist=true&autoReconnect=true&useSSL=false
+    username: root
+    password: 123456789
+  jpa:
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MySQL5Dialect
+
+jwt:
+  secret: xjIlFeXkh4JTs2VLz7AXiHsFatrSsBc3
+  expirationDateInMs: 18000000
+
+eureka:
+  client:
+    register-with-eureka: true
+    fetch-register: true
+    service-url:
+      defaultZone: http://localhost:8761/eureka/
+  instance:
+    hostname: localhost
+
+redis:
+  host: 127.0.0.1
+  port: 6379

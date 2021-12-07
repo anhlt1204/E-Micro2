@@ -1,0 +1,42 @@
+server:
+  port: 9191
+
+spring:
+  jackson:
+    default-property-inclusion: NON_NULL
+  application:
+    name: API-GATEWAY
+  cloud:
+    gateway:
+      discovery:
+        locator:
+          enabled: true
+          lowerCaseServiceId: true
+      routes:
+        - id: user-svc
+          uri: 'lb://user-svc'
+          predicates:
+            - Path=/user-svc/
+          filters:
+            - 'RewritePath=/user-svc/(?<path>.*), /$\{path}'
+        - id: product-svc
+          uri: 'lb://product-svc'
+          predicates:
+            - Path=/product-svc/
+          filters:
+            - 'RewritePath=/product-svc/(?<path>.*), /$\{path}'
+
+eureka:
+  client:
+    register-with-eureka: true
+    fetch-register: true
+    service-url:
+      defaultZone: http://localhost:8761/eureka/
+
+redis:
+  host: 127.0.0.1
+  port: 6379
+
+jwt:
+  secret: xjIlFeXkh4JTs2VLz7AXiHsFatrSsBc3
+  expirationDateInMs: 18000000
